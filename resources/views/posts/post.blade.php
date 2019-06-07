@@ -1,15 +1,16 @@
 <article class="post-item">
     @if ($post->image)
         <div class="post-item-image">
-            <a href="post.html">
+            <a href="{{ $post->path() }}">
                 <img src="{{ $post->image }}" alt="">
             </a>
         </div>
     @endif
     <div class="post-item-body">
         <div class="padding-10">
-            <h2><a href="post.html">{{ $post->title }}</a></h2>
-            <p>{{ $post->excerpt }}</p>
+            <h2><a href="{{ $post->path() }}">{{ $post->title }}</a></h2>
+
+            @markdown($post->excerpt)
         </div>
 
         <div class="post-meta padding-10 clearfix">
@@ -24,7 +25,7 @@
                 </ul>
             </div>
             <div class="pull-right">
-                <a href="post.html">Continue Reading &raquo;</a>
+                <a href="{{ $post->path() }}">Continue Reading &raquo;</a>
             </div>
         </div>
     </div>
