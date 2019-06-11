@@ -7,6 +7,8 @@ use Faker\Generator as Faker;
 use Carbon\Carbon;
 
 $factory->define(Post::class, function (Faker $faker) {
+    $faker->addProvider(new Bluemmb\Faker\PicsumPhotosProvider($faker));
+
     return [
         'author_id' => factory('App\User'),
         'title' => $title = $faker->sentence(rand(8, 12)),

@@ -15,12 +15,15 @@
 
                 <div class="post-meta no-border">
                     <ul class="post-meta-group">
-                        <li><i class="fa fa-user"></i><a href="#"> {{ $post->author->name }}</a></li>
+                        <li><i class="fa fa-user"></i><a href="/posts?by={{ $post->author->name }}"> {{ $post->author->name }}</a></li>
                         <li><i class="fa fa-clock-o"></i>
                             <time> {{ $post->published_at->diffForHumans() }}</time>
                         </li>
-                        <li><i class="fa fa-tags"></i><a href="#"> Blog</a></li>
+                        <li><i class="fa fa-tags"></i><a href="/posts/{{ $post->category->slug }}"> {{ $post->category->slug }}</a></li>
                         <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
+                        <li><i class="fa fa-eye"></i>
+                            {{ $post->views }} {{ str_plural('view', $post->views) }}
+                        </li>
                     </ul>
                 </div>
 
@@ -32,23 +35,21 @@
     <article class="post-author padding-10">
         <div class="media">
             <div class="media-left">
-                <a href="#">
+                <a href="/posts?by={{ $post->author->name }}">
                     <img alt="Author 1" src="{{ asset('cms/img/author.jpg') }}" class="media-object">
                 </a>
             </div>
             <div class="media-body">
-                <h4 class="media-heading"><a href="#">{{ $post->author->name }}</a></h4>
+                <h4 class="media-heading"><a href="/posts?by={{ $post->author->name }}">{{ $post->author->name }}</a></h4>
                 <div class="post-author-count">
-                    <a href="#">
+                    <a href="/posts?by={{ $post->author->name }}">
                         <i class="fa fa-clone"></i>
-                        90 posts
+                        {{ $post->author->posts_count }}
+                        {{ str_plural('post', $post->author->posts_count) }}
                     </a>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis ad aut sunt cum, mollitia excepturi
-                    neque
-                    sint magnam minus aliquam, voluptatem, labore quis praesentium eum quae dolorum temporibus
-                    consequuntur!
-                    Non.</p>
+
+                @markdown($post->author->bio)
             </div>
         </div>
     </article>

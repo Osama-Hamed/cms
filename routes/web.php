@@ -11,5 +11,7 @@
 |
 */
 
-Route::get('/', 'PostsController@index');
-Route::get('/posts/{post}', 'PostsController@show');
+//Route::get('/', 'PostsController@index');
+Route::get('/posts', 'PostsController@index');
+Route::get('/posts/{category}', 'PostsController@index');
+Route::get('/posts/{category}/{post}', 'PostsController@show');

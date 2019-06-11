@@ -4,10 +4,10 @@
             <div class="input-group">
                 <input type="text" class="form-control input-lg" placeholder="Search for...">
                 <span class="input-group-btn">
-                            <button class="btn btn-lg btn-default" type="button">
-                                <i class="fa fa-search"></i>
-                            </button>
-                          </span>
+                    <button class="btn btn-lg btn-default" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
             </div><!-- /input-group -->
         </div>
 
@@ -17,26 +17,13 @@
             </div>
             <div class="widget-body">
                 <ul class="categories">
-                    <li>
-                        <a href="#"><i class="fa fa-angle-right"></i> Web Development</a>
-                        <span class="badge pull-right">10</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-angle-right"></i> Web Design</a>
-                        <span class="badge pull-right">10</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-angle-right"></i> General</a>
-                        <span class="badge pull-right">10</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-angle-right"></i> DIY</a>
-                        <span class="badge pull-right">10</span>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-angle-right"></i> Facebook Development</a>
-                        <span class="badge pull-right">10</span>
-                    </li>
+                    @foreach ($categories as $category)
+                        <li>
+                            <a href="/posts/{{ $category->slug }}"><i
+                                        class="fa fa-angle-right"></i> {{ $category->name }}</a>
+                            <span class="badge pull-right">{{ $category->posts_count }}</span>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -47,45 +34,21 @@
             </div>
             <div class="widget-body">
                 <ul class="popular-posts">
-                    <li>
-                        <div class="post-image">
-                            <a href="#">
-                                <img src="{{ asset('cms/img/Post_Image_5_thumb.jpg') }}" />
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h6><a href="#">Blog Post #5</a></h6>
-                            <div class="post-meta">
-                                <span>36 minutes ago</span>
+                    @foreach ($popularPosts as $post)
+                        <li>
+                            <div class="post-image">
+                                <a href="{{ $post->path() }}">
+                                    <img src="{{ $post->image }}"/>
+                                </a>
                             </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-image">
-                            <a href="#">
-                                <img src="{{ asset('cms/img/Post_Image_4_thumb.jpg') }}" />
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h6><a href="#">Blog Post #4</a></h6>
-                            <div class="post-meta">
-                                <span>36 minutes ago</span>
+                            <div class="post-body">
+                                <h6><a href="{{ $post->path() }}">{{ $post->title }}</a></h6>
+                                <div class="post-meta">
+                                    <span>{{ $post->published_at->diffForHumans() }}</span>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="post-image">
-                            <a href="#">
-                                <img src="{{ asset('cms/img/Post_Image_3_thumb.jpg') }}" />
-                            </a>
-                        </div>
-                        <div class="post-body">
-                            <h6><a href="#">Blog Post #3</a></h6>
-                            <div class="post-meta">
-                                <span>36 minutes ago</span>
-                            </div>
-                        </div>
-                    </li>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

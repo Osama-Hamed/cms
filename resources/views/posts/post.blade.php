@@ -16,12 +16,17 @@
         <div class="post-meta padding-10 clearfix">
             <div class="pull-left">
                 <ul class="post-meta-group">
-                    <li><i class="fa fa-user"></i><a href="#"> {{ $post->author->name }}</a></li>
+                    <li><i class="fa fa-user"></i><a
+                                href="/posts?by={{ $post->author->name }}"> {{ $post->author->name }}</a></li>
                     <li><i class="fa fa-clock-o"></i>
                         <time> {{ $post->published_at->diffForHumans() }}</time>
                     </li>
-                    <li><i class="fa fa-tags"></i><a href="#"> Blog</a></li>
+                    <li><i class="fa fa-tags"></i><a
+                                href="/posts/{{ $post->category->slug }}"> {{ $post->category->name }}</a></li>
                     <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
+                    <li><i class="fa fa-eye"></i>
+                        {{ $post->views }} {{ str_plural('view', $post->views) }}
+                    </li>
                 </ul>
             </div>
             <div class="pull-right">

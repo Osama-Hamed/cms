@@ -7,7 +7,7 @@
     @endforeach
 
     <nav class="text-center">
-        {{ $posts->links() }}
+        {{ $posts->appends(request()->query())->links() }}
     </nav>
 
 @endsection

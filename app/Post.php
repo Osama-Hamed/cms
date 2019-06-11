@@ -2,24 +2,47 @@
 
 namespace App;
 
+use App\Filters\PostFilters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     protected $dates = ['published_at'];
+    protected $with = ['author', 'category'];
 
     public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withCount('posts');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public static function published()
     {
         return static::latest('published_at')
-            ->with('author')
-            ->where('published_at', '<=', Carbon::now())
-            ->simplePaginate(3);
+            ->published();
+    }
+
+    public static function popular()
+    {
+        return static::orderBy('views', 'desc')
+            ->published()
+            ->take(3)
+            ->get();
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<=', Carbon::now());
+    }
+
+    public function scopeFilter($query, PostFilters $filters)
+    {
+        return $filters->apply($query);
     }
 
     public function isPublished()
@@ -34,6 +57,6 @@ class Post extends Model
 
     public function path()
     {
-        return "/posts/$this->slug";
+        return "/posts/{$this->category->slug}/$this->slug";
     }
 }
