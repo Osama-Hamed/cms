@@ -6,7 +6,7 @@ use App\User;
 
 class PostFilters extends Filters
 {
-    protected $filters = ['by', 'popular'];
+    protected $filters = ['by', 'popular', 'search'];
 
     protected function by($username)
     {
@@ -20,5 +20,10 @@ class PostFilters extends Filters
         $this->builder->getQuery()->orders = [];
 
         return $this->builder->orderBy('views', 'desc');
+    }
+
+    protected function search($title)
+    {
+        return $this->builder->where('title', 'like', "%{$title}%");
     }
 }
