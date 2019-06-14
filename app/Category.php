@@ -24,4 +24,9 @@ class Category extends Model
     {
     	return 'slug';
     }
+
+    public static function getAll()
+    {
+        return static::all();
+    }
 }

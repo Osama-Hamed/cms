@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $dates = ['published_at'];
-    protected $with = ['author', 'category'];
+    protected $with = ['author', 'category', 'tags'];
 
     public function author()
     {
@@ -19,6 +19,11 @@ class Post extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public static function published()

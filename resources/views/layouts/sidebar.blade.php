@@ -61,13 +61,9 @@
             </div>
             <div class="widget-body">
                 <ul class="tags">
-                    <li><a href="#">PHP</a></li>
-                    <li><a href="#">Javascrit</a></li>
-                    <li><a href="#">Symfony</a></li>
-                    <li><a href="#">Laravel</a></li>
-                    <li><a href="#">Angular</a></li>
-                    <li><a href="#">Vue Js</a></li>
-                    <li><a href="#">React Js</a></li>
+                    @foreach ($tags as $tag)
+                        <li><a href="?tag={{ $tag->slug }}">{{ $tag->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>

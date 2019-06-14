@@ -6,6 +6,7 @@
             </a>
         </div>
     @endif
+
     <div class="post-item-body">
         <div class="padding-10">
             <h2><a href="{{ $post->path() }}">{{ $post->title }}</a></h2>
@@ -21,8 +22,14 @@
                     <li><i class="fa fa-clock-o"></i>
                         <time> {{ $post->published_at->diffForHumans() }}</time>
                     </li>
-                    <li><i class="fa fa-tags"></i><a
+                    <li><i class="fa fa-folder"></i><a
                                 href="/posts/{{ $post->category->slug }}"> {{ $post->category->name }}</a></li>
+                    <li>
+                        <i class="fa fa-tags"></i>
+                        @foreach ($post->tags as $tag)
+                            <a href="?tag={{ $tag->slug }}">#{{ $tag->name }}</a>
+                        @endforeach
+                    </li>
                     <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
                     <li><i class="fa fa-eye"></i>
                         {{ $post->views }} {{ str_plural('view', $post->views) }}

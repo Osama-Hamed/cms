@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Support\ServiceProvider;
 use App\Category;
 
@@ -26,11 +27,21 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.sidebar', function ($view) {
-            $view->with('categories', Category::all());
-        });
+            $categories = \Cache::rememberForever('categories', function () {
+                return Category::getAll();
+            });
 
-        view()->composer('layouts.sidebar', function ($view) {
-            $view->with('popularPosts', Post::popular());
+            $tags = \Cache::rememberForever('tags', function () {
+                return Tag::has('posts')->get();
+            });
+
+            $popularPosts = \Cache::rememberForever('popularPosts', function () {
+                return Post::popular();
+            });
+
+            $view->with('categories', $categories);
+            $view->with('popularPosts', $popularPosts);
+            $view->with('tags', $tags);
         });
     }
 }
