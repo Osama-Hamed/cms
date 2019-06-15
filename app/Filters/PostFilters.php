@@ -5,11 +5,12 @@ namespace App\Filters;
 use App\Post;
 use App\Tag;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class PostFilters extends Filters
 {
-    protected $filters = ['by', 'popular', 'search', 'tag'];
+    protected $filters = ['by', 'popular', 'search', 'tag', 'month', 'year'];
 
     protected function by($username)
     {
@@ -34,8 +35,18 @@ class PostFilters extends Filters
     {
         $tag = Tag::where('slug', $tagSlug)->firstOrFail();
 
-        $this->builder->whereHas('tags', function ($query) use ($tag) {
+        return $this->builder->whereHas('tags', function ($query) use ($tag) {
             $query->where('tag_id', $tag->id);
         });
+    }
+
+    protected function month($month)
+    {
+        return $this->builder->whereMonth('published_at', Carbon::parse($month)->month);
+    }
+
+    protected function year($year)
+    {
+        return $this->builder->whereYear('published_at', $year);
     }
 }

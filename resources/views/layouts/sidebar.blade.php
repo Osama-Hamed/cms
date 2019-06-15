@@ -62,7 +62,26 @@
             <div class="widget-body">
                 <ul class="tags">
                     @foreach ($tags as $tag)
-                        <li><a href="?tag={{ $tag->slug }}">{{ $tag->name }}</a></li>
+                        <li><a href="/posts?tag={{ $tag->slug }}">{{ $tag->name }}</a></li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-heading">
+                <h4>Archives</h4>
+            </div>
+            <div class="widget-body">
+                <ul class="categories">
+                    @foreach ($archives as $archive)
+                        <li>
+                            <a href="/posts?month={{ $archive->month }}&year={{ $archive->year }}">
+                                {{ $archive->month . ' ' . $archive->year }}
+                            </a>
+
+                            <span class="badge pull-right">{{ $archive->posts_count }}</span>
+                        </li>
                     @endforeach
                 </ul>
             </div>

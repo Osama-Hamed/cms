@@ -40,6 +40,15 @@ class Post extends Model
             ->get();
     }
 
+    public static function archives()
+    {
+        return static::selectRaw('count(*) posts_count, year(published_at) year, monthname(published_at) month')
+            ->published()
+            ->groupBy('year', 'month')
+            ->orderByRaw('min(published_at) desc')
+            ->get();
+    }
+
     public function scopePublished($query)
     {
         return $query->where('published_at', '<=', Carbon::now());

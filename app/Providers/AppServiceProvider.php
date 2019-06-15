@@ -27,21 +27,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('layouts.sidebar', function ($view) {
-            $categories = \Cache::rememberForever('categories', function () {
-                return Category::getAll();
-            });
-
-            $tags = \Cache::rememberForever('tags', function () {
-                return Tag::has('posts')->get();
-            });
-
-            $popularPosts = \Cache::rememberForever('popularPosts', function () {
-                return Post::popular();
-            });
-
-            $view->with('categories', $categories);
-            $view->with('popularPosts', $popularPosts);
-            $view->with('tags', $tags);
+            $view->with('categories', Category::all());
+            $view->with('popularPosts', Post::popular());
+            $view->with('tags', Tag::has('posts')->get());
+            $view->with('archives', Post::archives());
         });
     }
 }
