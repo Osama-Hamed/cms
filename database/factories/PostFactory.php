@@ -11,6 +11,7 @@ $factory->define(Post::class, function (Faker $faker) {
 
     return [
         'author_id' => factory('App\User'),
+        'category_id' => factory('App\Category'),
         'title' => $title = $faker->sentence(rand(8, 12)),
         'slug' => str_replace(' ', '-', $title),
         'excerpt' => $faker->text(rand(250, 300)),
