@@ -30,7 +30,7 @@
                             <a href="?tag={{ $tag->slug }}">#{{ $tag->name }}</a>
                         @endforeach
                     </li>
-                    <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
+                    <li><i class="fa fa-comments"></i><a href="{{ $post->commentsPath() }}">{{ $post->comments_count }} {{ str_plural('comment', $post->comments_count) }}</a></li>
                     <li><i class="fa fa-eye"></i>
                         {{ $post->views }} {{ str_plural('view', $post->views) }}
                     </li>

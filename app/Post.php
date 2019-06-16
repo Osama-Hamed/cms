@@ -11,6 +11,15 @@ class Post extends Model
     protected $dates = ['published_at'];
     protected $with = ['author', 'category', 'tags'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('commentsCount', function ($builder) {
+            return $builder->withCount('comments');
+        });
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class)->withCount('posts');
@@ -51,6 +60,7 @@ class Post extends Model
             ->published()
             ->groupBy('year', 'month')
             ->orderByRaw('min(published_at) desc')
+            ->withoutGlobalScope('commentsCount')
             ->get();
     }
 
@@ -77,5 +87,10 @@ class Post extends Model
     public function path()
     {
         return "/posts/{$this->category->slug}/$this->slug";
+    }
+
+    public function commentsPath()
+    {
+        return $this->path() . '#post-comments';
     }
 }

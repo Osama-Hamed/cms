@@ -21,7 +21,9 @@ class PostsController extends Controller
 
         $post->increment('views');
 
-        return view('posts.show', compact('post'));
+        $comments = $post->comments()->simplePaginate(3);
+
+        return view('posts.show', compact('post', 'comments'));
     }
 
     protected function getPublishedPosts(Category $category, PostFilters $filters)
