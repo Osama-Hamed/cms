@@ -15,3 +15,5 @@
 Route::get('/posts', 'PostsController@index');
 Route::get('/posts/{category}', 'PostsController@index');
 Route::get('/posts/{category}/{post}', 'PostsController@show');
+
+Route::post('/posts/{category}/{post}/comments', 'CommentsController@store');

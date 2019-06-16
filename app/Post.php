@@ -37,7 +37,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->latest();
     }
 
     public static function published()
@@ -79,6 +79,11 @@ class Post extends Model
         return ! is_null($this->published_at) && $this->published_at <= Carbon::now();
     }
 
+    public function addComment($comment)
+    {
+        return $this->comments()->create($comment);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
@@ -92,5 +97,10 @@ class Post extends Model
     public function commentsPath()
     {
         return $this->path() . '#post-comments';
+    }
+
+    public function newCommentFormPath()
+    {
+        return $this->path() . '#comment-form';
     }
 }
