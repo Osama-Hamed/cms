@@ -42,8 +42,7 @@ class Post extends Model
 
     public static function published()
     {
-        return static::latest('published_at')
-            ->published();
+        return static::latest('published_at')->published();
     }
 
     public static function popular()
@@ -79,9 +78,23 @@ class Post extends Model
         return ! is_null($this->published_at) && $this->published_at <= Carbon::now();
     }
 
+    public function isScheduled()
+    {
+        return ! $this->isPublished() && ! is_null($this->published_at);
+    }
+
     public function addComment($comment)
     {
         return $this->comments()->create($comment);
+    }
+
+    public function getStatusAttribute()
+    {
+        if ($this->isPublished()) return ['status' => 'Published', 'label' => 'success'];
+
+        elseif ($this->isScheduled()) return ['status' => 'Scheduled', 'label' => 'warning'];
+
+        else return ['status' => 'Draft', 'label' => 'danger'];
     }
 
     public function getRouteKeyName()

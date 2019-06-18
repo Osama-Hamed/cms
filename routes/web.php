@@ -11,9 +11,15 @@
 |
 */
 
-//Route::get('/', 'PostsController@index');
+Route::get('/', 'PostsController@index');
 Route::get('/posts', 'PostsController@index');
 Route::get('/posts/{category}', 'PostsController@index');
 Route::get('/posts/{category}/{post}', 'PostsController@show');
 
 Route::post('/posts/{category}/{post}/comments', 'CommentsController@store');
+
+Auth::routes(['register' => false]);
+
+Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('dashboard');
+
+Route::get('/admin/posts', 'Admin\PostsController@index');
