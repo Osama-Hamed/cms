@@ -23,3 +23,5 @@ Auth::routes(['register' => false]);
 Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('dashboard');
 
 Route::get('/admin/posts', 'Admin\PostsController@index');
+Route::get('/admin/posts/create', 'Admin\PostsController@create');
+Route::post('/admin/posts', 'Admin\PostsController@store');

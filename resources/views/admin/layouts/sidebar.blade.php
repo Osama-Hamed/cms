@@ -30,7 +30,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="/admin/posts"><i class="fa fa-circle-o"></i> All Posts</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Add New</a></li>
+                    <li><a href="/admin/posts/create"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
             <li><a href="#"><i class="fa fa-folder"></i> <span>Categories</span></a></li>

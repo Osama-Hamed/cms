@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $fillable = ['category_id', 'title', 'slug', 'excerpt', 'body', 'published_at'];
     protected $dates = ['published_at'];
     protected $with = ['author', 'category', 'tags'];
 
@@ -17,6 +18,10 @@ class Post extends Model
 
         static::addGlobalScope('commentsCount', function ($builder) {
             return $builder->withCount('comments');
+        });
+
+        static::created(function ($post) {
+            $post->update(['slug' => $post->title]);
         });
     }
 
@@ -88,6 +93,18 @@ class Post extends Model
         return $this->comments()->create($comment);
     }
 
+    public function addTags($tagsString)
+    {
+        foreach ($tags = explode(',', $tagsString) as $tagName) {
+            $tag = Tag::firstOrCreate(
+                ['name' => ucwords(trim($tagName))],
+                ['slug' => str_slug($tagName)]
+            );
+
+            $this->tags()->attach($tag);
+        }
+    }
+
     public function getStatusAttribute()
     {
         if ($this->isPublished()) return ['status' => 'Published', 'label' => 'success'];
@@ -97,6 +114,15 @@ class Post extends Model
         else return ['status' => 'Draft', 'label' => 'danger'];
     }
 
+    public function setSlugAttribute($value)
+    {
+        if (static::whereSlug($slug = str_slug($value))->exists()) {
+            $slug = "{$slug}-{$this->id}";
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+    
     public function getRouteKeyName()
     {
         return 'slug';

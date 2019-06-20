@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Dasbhboard
+            Dashboard
         </h1>
         <ol class="breadcrumb">
             <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
@@ -22,7 +22,7 @@
                         <p class="lead text-muted">Hello {{ auth()->user()->name }}, Welcome to MyBlog</p>
 
                         <h4>Get started</h4>
-                        <p><a href="#" class="btn btn-primary">Write your first blog post</a></p>
+                        <p><a href="/admin/posts/create" class="btn btn-primary">Write your first blog post</a></p>
                     </div>
                     <!-- /.box-body -->
                 </div>

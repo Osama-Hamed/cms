@@ -5,7 +5,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            Dasbhboard
+            Dashboard
             <small>Display all posts</small>
         </h1>
         <ol class="breadcrumb">
@@ -21,10 +21,15 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <a href="" class="btn btn-primary">Add New</a>
+                        <a href="/admin/posts/create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body ">
+                        @if (session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                        @endif
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -79,7 +84,9 @@
 
 @endsection
 
-@section ('scripts')
+@section ('javascripts')
+    @parent
+
     <script>
         $('ul.pagination').addClass('no-margin pagination-sm');
     </script>
