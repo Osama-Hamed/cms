@@ -51,7 +51,7 @@
                                         <span class="label label-{{ $post->status['label'] }}">{{ $post->status['status'] }}</span>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn btn-xs btn-warning">
+                                        <a href="/admin/posts/{{ $post->slug }}/edit" class="btn btn-xs btn-warning">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <a href="#" class="btn btn-xs btn-danger">

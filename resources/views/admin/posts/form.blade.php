@@ -4,7 +4,7 @@
             <div class="form-group @error('title') has-error @enderror">
                 <label for="title">Title</label>
                 <input type="text" name="title" placeholder="Enter Title here" id="title"
-                       class="form-control" value="{{ old('title') }}">
+                       class="form-control" value="{{ old('title') ?: $post->title}}">
 
                 @error('title')
                 <p class="help-block">{{ $message }}</p>
@@ -13,7 +13,7 @@
             <div class="form-group excerpt @error('excerpt') has-error @enderror">
                 <label for="body">Excerpt</label>
                 <textarea name="excerpt" id="excerpt" rows="5"
-                          class="form-control">{{ old('excerpt') }}</textarea>
+                          class="form-control">{{ old('excerpt') ?: $post->excerpt }}</textarea>
 
                 @error('excerpt')
                 <p class="help-block">{{ $message }}</p>
@@ -22,7 +22,7 @@
             <div class="form-group @error('body') has-error @enderror">
                 <label for="body">Body</label>
                 <textarea name="body" id="body" rows="10"
-                          class="form-control">{{ old('body') }}</textarea>
+                          class="form-control">{{ old('body') ?: $post->body}}</textarea>
 
                 @error('body')
                 <p class="help-block">{{ $message }}</p>
@@ -42,7 +42,7 @@
                 <label for="published_at">Publish date</label>
                 <div class='input-group date' id='datetimepicker1'>
                     <input type="text" id="published_at" name="published_at" class="form-control"
-                           value="{{ old('published_at') }}" placeholder="Y-m-d H:i:s">
+                           value="{{ old('published_at') ?: $post->published_at }}" placeholder="Y-m-d H:i:s">
                     <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -72,7 +72,7 @@
                     <option value="">Choose category</option>
 
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ $category->id == old('category_id') ? 'selected' : '' }}>{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ $category->id == (old('category_id') ?? $categoryId) ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
 
@@ -100,7 +100,7 @@
             <div class="fileinput fileinput-new @error('image') has-error @enderror"
                  data-provides="fileinput">
                 <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                    <img src="http://placehold.it/200x200&text=No+Image" width="100%" alt="...">
+                    <img src="{{ $post->image ? asset('/cms/img/' . $post->image) : 'http://placehold.it/200x200&text=No+Image' }}" width="100%" alt="...">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"
                      style="max-width: 200px; max-height: 150px;"></div>

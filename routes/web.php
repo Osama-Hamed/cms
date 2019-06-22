@@ -25,3 +25,5 @@ Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('dashboa
 Route::get('/admin/posts', 'Admin\PostsController@index');
 Route::get('/admin/posts/create', 'Admin\PostsController@create');
 Route::post('/admin/posts', 'Admin\PostsController@store');
+Route::get('/admin/posts/{post}/edit', 'Admin\PostsController@edit');
+Route::patch('/admin/posts/{post}', 'Admin\PostsController@update');

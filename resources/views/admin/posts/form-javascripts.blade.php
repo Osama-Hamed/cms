@@ -5,7 +5,18 @@
 <script src="{{ asset('/cms/admin/plugins/tag-editor/jquery.caret.min.js') }}"></script>
 <script src="{{ asset('/cms/admin/plugins/tag-editor/jquery.tag-editor.min.js') }}"></script>
 <script>
-    $('input[name=tags]').tagEditor({ placeholder: 'tags'});
+    let options = {};
+
+        var tags = {!! json_encode(old('tags')) !!} ? {!! json_encode(explode(',', old('tags'))) !!} : {!! json_encode($post->tags->pluck('name')) !!};
+
+        console.log(tags);
+
+        options = {
+            placeholder: 'tags',
+            initialTags: tags
+        };
+
+    $('input[name=tags]').tagEditor(options);
 </script>
 
 <script src="{{ asset('/cms/admin/js/custom.js') }}"></script>

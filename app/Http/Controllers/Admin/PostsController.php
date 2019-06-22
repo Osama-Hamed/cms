@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Post;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PostsController extends Controller
@@ -33,10 +33,10 @@ class PostsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param StorePostRequest $form
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $form)
+    public function store(StorePostRequest $form)
     {
         $form->save();
 
@@ -58,24 +58,30 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param UpdatePostRequest $form
+     * @param Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $form, Post $post)
     {
-        //
+        $form->save();
+
+        return redirect('/admin/posts')
+            ->with('message', 'Post has been updated successfully!');
     }
 
     /**

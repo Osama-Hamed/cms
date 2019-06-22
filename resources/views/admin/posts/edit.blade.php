@@ -23,10 +23,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <form role="form" id="post-form" action="/admin/posts" method="POST" enctype="multipart/form-data">
+            <form role="form" id="post-form" action="/admin/posts/{{ $post->slug }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
 
-                @include ('admin.posts.form', ['post' => new \App\Post(), 'categoryId' => null])
+                @include ('admin.posts.form', ['post' => $post, 'categoryId' => $post->category->id])
             </form>
         </div>
         <!-- ./row -->
@@ -37,6 +38,6 @@
 @section ('javascripts')
     @parent
 
-    @include ('admin.posts.form-javascripts', ['post' => new \App\Post()])
+    @include ('admin.posts.form-javascripts', compact('post'))
 @endsection
 

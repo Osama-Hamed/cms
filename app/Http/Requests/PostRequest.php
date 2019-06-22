@@ -2,67 +2,70 @@
 
 namespace App\Http\Requests;
 
-use App\Post;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostRequest extends FormRequest
+abstract class PostRequest extends FormRequest
 {
-	/**
-	 * Determine if the user is authorized to make this request.
-	 *
-	 * @return bool
-	 */
-	public function authorize()
-	{
-		return true;
-	}
+    protected $data = [];
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
 
-	public function attributes()
-	{
-		return [
-			'category_id' => 'category',
-		];
-	}
+    protected function setData()
+    {
+        $this->data = $this->validated();
 
-	public function messages()
-	{
-		return [
-			'published_at.date_format' => 'publishing date format is not valid'
-		];
-	}
+        $this->generateSlug();
 
-	/**
-	 * Get the validation rules that apply to the request.
-	 *
-	 * @return array
-	 */
-	public function rules()
-	{
-		return [
-			'title' => 'required',
-			'excerpt' => 'required',
-			'body' => 'required',
-			'category_id' => 'required|exists:categories,id',
-			'published_at' => 'nullable|date_format:Y-m-d H:i:s',
-			'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-		];
-	}
+        $this->uploadImage();
+    }
 
-	public function save()
-	{
-		$data = $this->validated();
+    public function attributes()
+    {
+        return [
+            'category_id' => 'category',
+        ];
+    }
 
-		if ($image = $this->file('image')) $data['image'] = $this->uploadImage($image);
+    public function messages()
+    {
+        return [
+            'published_at.date_format' => 'publishing date format is not valid'
+        ];
+    }
 
-		$post = $this->user()->posts()->create($data);
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'published_at' => 'nullable|date_format:Y-m-d H:i:s',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ];
+    }
 
-		$post->addTags($this->tags);
-	}
+    protected function uploadImage()
+    {
+        if ($image = $this->file('image')) {
 
-	private function uploadImage($image)
-	{
-		$image->move(public_path('cms/img'), $imageName = time() . '_' . $this->file('image')->getClientOriginalName());
+            $image->move(public_path('cms/img'), $imageName = time() . '_' . $this->file('image')->getClientOriginalName());
 
-		return $imageName;
-	}
+            $this->data['image'] = $imageName;
+        }
+    }
+
+    abstract protected function generateSlug();
 }
