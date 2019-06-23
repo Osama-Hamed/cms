@@ -21,7 +21,19 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <a href="/admin/posts/create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                        <div class="pull-left">
+                            <a href="/admin/posts/create" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                        </div>
+
+                        <div class="pull-right">
+                            @foreach($postsCount as $status => $count)
+                                @if ($loop->last)
+                                    <a href="/admin/posts?status={{ $status }}" class="{{ $status == request()->query('status') ? 'selected-status' : '' }}"> {{ ucfirst($status) }}({{ $count }})</a>
+                                @else
+                                    <a href="/admin/posts?status={{ $status }}" class="{{ $status == request()->query('status') ? 'selected-status' : '' }}"> {{ ucfirst($status) }}({{ $count }})</a> &#124;
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body ">
@@ -43,7 +55,7 @@
                             <tbody>
                             @foreach ($posts as $post)
                                 <tr>
-                                    <td>{{ $post->title }}</td>
+                                    <td>{{ str_limit($post->title, 50) }}</td>
                                     <td>{{ $post->author->name }}</td>
                                     <td>{{ $post->category->name }}</td>
                                     <td>
@@ -54,9 +66,15 @@
                                         <a href="/admin/posts/{{ $post->slug }}/edit" class="btn btn-xs btn-warning">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                        <a href="#" class="btn btn-xs btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form action="/admin/posts/{{ $post->slug }}" method="POST"
+                                              style="display: inline">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-xs btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,7 +85,7 @@
 
                     <div class="box-footer">
                         <div class="pull-left">
-                            {{ $posts->links() }}
+                            {{ $posts->appends(request()->query())->links() }}
                         </div>
 
                         <div class="pull-right">

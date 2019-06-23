@@ -100,7 +100,7 @@
             <div class="fileinput fileinput-new @error('image') has-error @enderror"
                  data-provides="fileinput">
                 <div class="fileinput-new thumbnail" style="width: 250px; height: 200px;">
-                    <img src="{{ $post->image ? asset('/cms/img/' . $post->image) : 'http://placehold.it/200x200&text=No+Image' }}" width="100%" alt="...">
+                    <img src="{{ $post->image ? asset('/cms/img/posts/' . $post->image) : 'http://placehold.it/200x200&text=No+Image' }}" width="100%" alt="...">
                 </div>
                 <div class="fileinput-preview fileinput-exists thumbnail"
                      style="max-width: 200px; max-height: 150px;"></div>

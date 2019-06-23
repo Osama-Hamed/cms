@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Filters\Admin\PostFilters;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Post;
@@ -13,11 +14,20 @@ class PostsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param PostFilters $filters
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PostFilters $filters)
     {
-        return view('admin.posts.index', ['posts' => Post::latest()->paginate(5)]);
+        $posts = Post::latest()->filter($filters)->paginate(5);
+        $postsCount = [
+            'all' => Post::count(),
+            'published' => Post::published()->count(),
+            'scheduled' => Post::scheduled()->count(),
+            'draft' => Post::draft()->count(),
+        ];
+
+        return view('admin.posts.index', compact('posts', 'postsCount'));
     }
 
     /**
@@ -78,6 +88,8 @@ class PostsController extends Controller
      */
     public function update(UpdatePostRequest $form, Post $post)
     {
+        if ($form->file('image')) $post->removeImage();
+
         $form->save();
 
         return redirect('/admin/posts')
@@ -87,11 +99,16 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Post $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        $post->removeImage();
+
+        $post->delete();
+
+        return back()->with('message', 'Post deleted successfully.');
     }
 }

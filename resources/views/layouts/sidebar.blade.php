@@ -38,11 +38,13 @@
                 <ul class="popular-posts">
                     @foreach ($popularPosts as $post)
                         <li>
-                            <div class="post-image">
-                                <a href="{{ $post->path() }}">
-                                    <img src="{{ $post->image }}"/>
-                                </a>
-                            </div>
+                            @if($post->image)
+                                <div class="post-image">
+                                    <a href="{{ $post->path() }}">
+                                        <img src="{{ asset('/cms/img/posts/' . $post->image) }}"/>
+                                    </a>
+                                </div>
+                            @endif
                             <div class="post-body">
                                 <h6><a href="{{ $post->path() }}">{{ $post->title }}</a></h6>
                                 <div class="post-meta">

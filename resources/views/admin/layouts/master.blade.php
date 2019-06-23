@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="{{ asset('/cms/admin/css/skins/_all-skins.min.css') }}">
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link rel="stylesheet" href="{{ asset('/cms/admin/css/custom.css') }}">
 @show
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

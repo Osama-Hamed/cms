@@ -2,7 +2,7 @@
     @if ($post->image)
         <div class="post-item-image">
             <a href="{{ $post->path() }}">
-                <img src="{{ $post->image }}" alt="">
+                <img src="{{ asset('/cms//img/posts/' . $post->image) }}" alt="">
             </a>
         </div>
     @endif

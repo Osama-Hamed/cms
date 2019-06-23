@@ -16,7 +16,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'slug' => str_replace(' ', '-', $title),
         'excerpt' => $faker->text(rand(250, 300)),
         'body' => $faker->paragraphs(rand(10, 15), true),
-        'image' => mt_rand(0, 1) == 1 ? $faker->imageUrl(800, 450) : null,
+        'image' => mt_rand(0, 1) == 1 ? 'demo.png' : null,
         'created_at' => $date = Carbon::now()->subDays(mt_rand(0, 10)),
         'updated_at' => $date,
         'published_at' => mt_rand(0, 1) == 0 ? null : (clone $date)->addDays(mt_rand(0, 5))

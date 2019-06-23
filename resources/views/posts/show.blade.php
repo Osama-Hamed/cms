@@ -5,7 +5,7 @@
     <article class="post-item post-detail">
         @if ($post->image)
             <div class="post-item-image">
-                <img src="{{ $post->image }}" alt="">
+                <img src="{{ asset('/cms/img/posts/' . $post->image) }}" alt="">
             </div>
         @endif
 

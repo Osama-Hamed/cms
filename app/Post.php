@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Filters\PostFilters;
+use App\Filters\Filters;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +18,11 @@ class Post extends Model
 
         static::addGlobalScope('commentsCount', function ($builder) {
             return $builder->withCount('comments');
+        });
+
+        static::deleting(function ($post) {
+             $post->comments()->delete();
+             $post->tags()->detach();
         });
     }
 
@@ -69,7 +74,17 @@ class Post extends Model
         return $query->where('published_at', '<=', Carbon::now());
     }
 
-    public function scopeFilter($query, PostFilters $filters)
+    public function scopeScheduled($query)
+    {
+        return $query->where('published_at', '>', Carbon::now());
+    }
+
+    public function scopeDraft($query)
+    {
+        return $query->whereNull('published_at');
+    }
+
+    public function scopeFilter($query, Filters $filters)
     {
         return $filters->apply($query);
     }
@@ -108,6 +123,11 @@ class Post extends Model
 
             $this->tags()->attach($tag);
         }
+    }
+
+    public function removeImage()
+    {
+        if ($this->image && file_exists($image = public_path('/cms/img/posts/') . $this->image)) unlink($image);
     }
 
     public function getStatusAttribute()

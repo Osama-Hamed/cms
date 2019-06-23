@@ -61,7 +61,7 @@ abstract class PostRequest extends FormRequest
     {
         if ($image = $this->file('image')) {
 
-            $image->move(public_path('cms/img'), $imageName = time() . '_' . $this->file('image')->getClientOriginalName());
+            $image->move(public_path('cms/img/posts'), $imageName = time() . '_' . $this->file('image')->getClientOriginalName());
 
             $this->data['image'] = $imageName;
         }
