@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
+    protected $fillable = ['name', 'slug'];
+
     protected static function boot()
     {
         parent::boot();
@@ -13,16 +16,25 @@ class Category extends Model
         static::addGlobalScope('postsCount', function ($builder) {
             return $builder->withCount('posts');
         });
+
+        static::deleting(function ($category) {
+            DB::table('posts')
+                ->where('category_id', $category->id)
+                ->get()
+                ->each(function ($post) {
+                    Post::find($post->id)->delete();
+                });
+        });
     }
 
     public function posts()
     {
-    	return $this->hasMany(Post::class)->published();
+        return $this->hasMany(Post::class)->published();
     }
 
     public function getRouteKeyName()
     {
-    	return 'slug';
+        return 'slug';
     }
 
     public static function getAll()

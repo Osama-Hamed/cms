@@ -28,3 +28,10 @@ Route::post('/admin/posts', 'Admin\PostsController@store');
 Route::get('/admin/posts/{post}/edit', 'Admin\PostsController@edit');
 Route::patch('/admin/posts/{post}', 'Admin\PostsController@update');
 Route::delete('/admin/posts/{post}', 'Admin\PostsController@destroy');
+
+Route::get('/admin/categories', 'Admin\CategoriesController@index');
+Route::get('/admin/categories/create', 'Admin\CategoriesController@create');
+Route::post('/admin/categories', 'Admin\CategoriesController@store');
+Route::get('/admin/categories/{category}/edit', 'Admin\CategoriesController@edit');
+Route::patch('/admin/categories/{category}', 'Admin\CategoriesController@update');
+Route::delete('/admin/categories/{category}', 'Admin\CategoriesController@destroy');
