@@ -34,6 +34,7 @@
                 </ul>
             </li>
             <li><a href="/admin/categories"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+            <li><a href="/admin/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
         </ul>
     </section>
     <!-- /.sidebar -->
