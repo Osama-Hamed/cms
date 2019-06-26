@@ -22,12 +22,26 @@
                            aria-expanded="false">Browse <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/posts">All Posts</a></li>
-                            <li><a href="#">My Posts</a></li>
+                            @if (Auth::check())
+                                <li><a href="/posts?by={{ auth()->user()->name }}">My Posts</a></li>
+                            @endif
                             <li><a href="/posts?popular=1">Pupular Posts</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    @if (Auth::check())
+                        <li><a href="/admin/dashboard">Dashboard</a></li>
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Sign out
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="/login">Login</a></li>
+                    @endif
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->

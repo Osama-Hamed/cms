@@ -2,21 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
+use App\Comment;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Post;
+use App\User;
 
 class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -24,6 +17,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $statistics = [
+            'totalMembers' => User::count(),
+            'totalPosts' => Post::count(),
+            'totalComments' => Comment::count(),
+            'totalCategories' => Category::count()
+        ];
+        return view('admin.dashboard', compact('statistics'));
     }
 }

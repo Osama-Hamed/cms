@@ -36,6 +36,7 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Bio</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>
@@ -44,7 +45,8 @@
                             <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ str_limit($user->name) }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->bio }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->Role }}</td>
                                     <td>

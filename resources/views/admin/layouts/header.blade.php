@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="index.html" class="logo">
+    <a href="/el" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>M</b>B</span>
         <!-- logo for regular state and mobile devices -->
@@ -20,23 +20,23 @@
             <ul class="nav navbar-nav">
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('/cms/admin/img/user.jpg') }}" class="user-image" alt="User Image">
+                        <img src="https://www.gravatar.com/avatar" class="user-image" alt="User Image">
                         <span class="hidden-xs">{{ auth()->user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ asset('/cms/admin/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                            <img src="https://www.gravatar.com/avatar" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ auth()->user()->name }} - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                {{ auth()->user()->name }} - {{ auth()->user()->bio }}
+                                <small>Member since {{ auth()->user()->created_at->toFormattedDateString() }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="/posts?by={{ auth()->user()->name }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a class="btn btn-default btn-flat" href="{{ route('logout') }}"

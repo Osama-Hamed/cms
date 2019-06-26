@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UpdateUserRequest extends FormRequest
 {
+    protected $data = [];
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,6 +41,6 @@ class UpdateUserRequest extends FormRequest
 
         $this->data['password'] = Hash::make($this->data['password']);
 
-        User::create($this->data);
+        $this->route('user')->update($this->data);
     }
 }

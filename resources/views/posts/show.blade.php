@@ -43,7 +43,7 @@
         <div class="media">
             <div class="media-left">
                 <a href="/posts?by={{ $post->author->name }}">
-                    <img alt="Author 1" src="{{ asset('cms/img/author.jpg') }}" class="media-object">
+                    <img alt="" src="https://www.gravatar.com/avatar" class="media-object">
                 </a>
             </div>
             <div class="media-body">
