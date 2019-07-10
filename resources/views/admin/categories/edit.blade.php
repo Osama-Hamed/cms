@@ -9,8 +9,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/Catgories">Category</a></li>
-            <li class="active">Update Category</li>
+            <li><a href="/admin/categories">Categories</a></li>
+            <li class="active">Edit Category</li>
         </ol>
     </section>
 

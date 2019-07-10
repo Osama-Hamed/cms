@@ -36,7 +36,6 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Bio</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Action</th>
@@ -46,9 +45,12 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->bio }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->Role }}</td>
+                                    <td>
+                                        @foreach($user->roles as $role)
+                                            {{ $role->display_name }}
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <a href="/admin/users/{{ $user->id }}/edit" class="btn btn-xs btn-warning">
                                             <i class="fa fa-edit"></i>
@@ -58,7 +60,7 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <button type="submit" class="btn btn-xs btn-danger">
+                                            <button type="submit" class="btn btn-xs btn-danger" @if ($user->id == 1) disabled @endif>
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>

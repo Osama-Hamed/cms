@@ -20,6 +20,11 @@ class StoreUserRequest extends FormRequest
         return true;
     }
 
+    public function attributes()
+    {
+        return ['role_id' => 'role'];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,7 +36,7 @@ class StoreUserRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed',
-            'bio' => 'required'
+            'role_id' => 'required|exists:roles,id'
         ];
     }
 
@@ -41,6 +46,6 @@ class StoreUserRequest extends FormRequest
 
         $this->data['password'] = Hash::make($this->data['password']);
 
-        User::create($this->data);
+        User::create($this->data)->attachRole($this->data['role_id']);
     }
 }

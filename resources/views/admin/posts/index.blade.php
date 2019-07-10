@@ -63,7 +63,13 @@
                                         <span class="label label-{{ $post->status['label'] }}">{{ $post->status['status'] }}</span>
                                     </td>
                                     <td>
-                                        <a href="/admin/posts/{{ $post->slug }}/edit" class="btn btn-xs btn-warning">
+                                        <a href="/admin/posts/{{ $post->slug }}/edit" class="btn btn-xs btn-warning"
+                                                @if (auth()->user()->hasRole(['admin', 'editor']) || auth()->user()->hasRoleAndOwns('author', $post))
+                                                    ''
+                                                @else
+                                                    disabled
+                                                @endif
+                                            >
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <form action="/admin/posts/{{ $post->slug }}" method="POST"
@@ -71,7 +77,13 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <button type="submit" class="btn btn-xs btn-danger">
+                                            <button type="submit" class="btn btn-xs btn-danger"
+                                                @if (auth()->user()->hasRole(['admin', 'editor']) || auth()->user()->hasRoleAndOwns('author', $post))
+                                                    ''
+                                                @else
+                                                    disabled
+                                                @endif
+>
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>

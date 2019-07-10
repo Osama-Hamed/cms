@@ -158,4 +158,9 @@ class Post extends Model
     {
         return $this->path() . '#comment-form';
     }
+
+    public function getUserIdAttribute()
+    {
+        return $this->author_id;
+    }
 }

@@ -9,8 +9,8 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/users">User</a></li>
-            <li class="active">Update User</li>
+            <li><a href="/admin/users">Users</a></li>
+            <li class="active">Edit User</li>
         </ol>
     </section>
 
@@ -21,7 +21,10 @@
                 @csrf
                 @method('PATCH')
 
-                @include ('admin.users.form', compact('user'))
+                @include ('admin.users.form', [
+                    'user' => $user,
+                    'roleId' => $user->roles->first()->id
+                ])
             </form>
         </div>
         <!-- ./row -->

@@ -22,7 +22,7 @@ Route::post('/posts/{category}/{post}/comments', 'CommentsController@store');
 Auth::routes(['register' => false]);
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'check-permission']], function () {
     Route::get('/admin/dashboard', 'Admin\DashboardController@index')->name('dashboard');
 
     Route::get('/admin/posts', 'Admin\PostsController@index');

@@ -1,6 +1,6 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="/el" class="logo">
+    <a href="" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>M</b>B</span>
         <!-- logo for regular state and mobile devices -->
@@ -29,7 +29,7 @@
                             <img src="https://www.gravatar.com/avatar" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ auth()->user()->name }} - {{ auth()->user()->bio }}
+                                {{ auth()->user()->name }} - {{ auth()->user()->roles->first()->display_name }}
                                 <small>Member since {{ auth()->user()->created_at->toFormattedDateString() }}</small>
                             </p>
                         </li>

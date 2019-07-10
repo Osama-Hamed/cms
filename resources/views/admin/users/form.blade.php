@@ -19,6 +19,27 @@
                 @enderror
             </div>
 
+            <div class="form-group @error('role_id') has-error @enderror">
+                <label for="email">Role</label>
+
+                @if ($user->exists && $user->id == 1)
+                    <input type="hidden" name="role_id" value="1">
+                    <p>{{ $user->roles->first()->display_name }}</p>
+                @else
+                    <select name="role_id" id="role_id" class="form-control">
+                        <option value="">Choose role</option>
+
+                        @foreach (\App\Role::all() as $role)
+                            <option value="{{ $role->id }}" {{ $role->id == (old('role_id') ?? $roleId) ? 'selected' : '' }}>{{ $role->display_name }}</option>
+                        @endforeach
+                    </select>
+                @endif
+
+                @error('role_id')
+                <p class="help-block">{{ $message }}</p>
+                @enderror
+            </div>
+
             <div class="form-group @error('bio') has-error @enderror">
                 <label for="bio">Bio</label>
                 <input type="text" name="bio" id="bio" class="form-control" value="{{ old('bio') ?: $user->bio }}">

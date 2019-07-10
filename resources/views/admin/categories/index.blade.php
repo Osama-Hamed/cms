@@ -10,7 +10,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/posts">Categories</a></li>
+            <li><a href="/admin/categories">Categories</a></li>
             <li class="active">All Categories</li>
         </ol>
     </section>
@@ -46,7 +46,11 @@
                                     <td>{{ str_limit($category->name) }}</td>
                                     <td>{{ $category->posts_count }}</td>
                                     <td>
-                                        <a href="/admin/categories/{{ $category->slug }}/edit" class="btn btn-xs btn-warning">
+                                        <a href="/admin/categories/{{ $category->slug }}/edit" class="btn btn-xs btn-warning"
+                                            @if (! auth()->user()->hasRole(['admin', 'editor']))
+                                                disabled
+                                            @endif
+                                        >
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <form action="/admin/categories/{{ $category->slug }}" method="POST"
@@ -54,7 +58,11 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <button type="submit" class="btn btn-xs btn-danger">
+                                            <button type="submit" class="btn btn-xs btn-danger"
+                                                @if (! auth()->user()->hasRole(['admin', 'editor']))
+                                                    disabled
+                                                @endif
+                                            >
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>

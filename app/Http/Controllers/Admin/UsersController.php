@@ -91,6 +91,8 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($user->id == 1) abort(403);
+
         $user->delete();
 
         return back()->with('message', 'User deleted successfully.');

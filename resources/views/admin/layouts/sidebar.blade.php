@@ -8,7 +8,7 @@
                 <img src="https://www.gravatar.com/avatar" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ auth()->user()->name }}</p>
+                <p>{{ str_limit(auth()->user()->name, 20) }}</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -33,8 +33,12 @@
                     <li><a href="/admin/posts/create"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
-            <li><a href="/admin/categories"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
-            <li><a href="/admin/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
+            @role (['admin', 'editor'])
+                <li><a href="/admin/categories"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+            @endrole
+            @role ('admin')
+                <li><a href="/admin/users"><i class="fa fa-users"></i> <span>Users</span></a></li>
+            @endrole
         </ul>
     </section>
     <!-- /.sidebar -->

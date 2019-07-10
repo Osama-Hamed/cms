@@ -31,7 +31,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email,' . $this->route('user')->id,
             'password' => 'required|min:8|confirmed',
-            'bio' => 'required'
+            'role_id' => 'required|exists:roles,id'
         ];
     }
 
@@ -41,6 +41,8 @@ class UpdateUserRequest extends FormRequest
 
         $this->data['password'] = Hash::make($this->data['password']);
 
-        $this->route('user')->update($this->data);
+        if ($this->route('user')->id != 1) tap($this->route('user'))->update($this->data)->detachRoles()->attachRole($this->data['role_id']);
+        else $this->route('user')->update($this->data);
+
     }
 }

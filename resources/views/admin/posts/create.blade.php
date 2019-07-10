@@ -15,7 +15,7 @@
         </h1>
         <ol class="breadcrumb">
             <li><a href="/admin/dashboard"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li><a href="/admin/posts">Post</a></li>
+            <li><a href="/admin/posts">Posts</a></li>
             <li class="active">Add New Post</li>
         </ol>
     </section>
